@@ -15,7 +15,11 @@ const SignupForm = ({setIsLoggedIn}) => {
 
     const[showPassword, setShowPassword] = useState(false)
 
+    const[showConfirmPassword, setShowConfirmPassword] = useState(false)
+
     const navigate = useNavigate();
+
+    const[accountType, setAccountType] = useState("student")
 
     function changeHandler(event) {
         setFormData((prevData) => ({
@@ -36,72 +40,104 @@ const SignupForm = ({setIsLoggedIn}) => {
         const accountData = {
             ...formData
         }
-        console.log(accountData)
+        const finalData = {
+            ...accountData,
+            accountType
+        }
+        console.log("printing final data")
+        console.log(finalData)
         navigate("/dashboard")
 
     }
 
   return (
     <div>
-        <div>
+        <div className='flex bg-richblack-800 p-1 gap-x-1 my-6 rounded-full max-w-max'>
+
             {/* student-instructor tab */}
-            <button>
+            <button onClick={() => setAccountType("student")}
+            className={`${accountType === "student" ? "bg-richblack-900 text-richblack-5" : "bg-transparent text-richblack-200"} 
+            py-2 px-5 rounded-full tramsition-all duration-200`}>
                 Student
             </button>
-            <button>
+
+            <button onClick={() => setAccountType("instructor")}
+            className={`${accountType === "instructor" ? "bg-richblack-900 text-richblack-5" : "bg-transparent text-richblack-200"}
+             py-2 px-5 rounded-full tramsition-all duration-200`}>
                 Instructor
             </button>
         </div>
 
         <form onSubmit={submitHandler} >
             {/* firstname and last name */}
-            <div>
-                <label>
-                    <p>First Name<sup>*</sup></p>
+            <div className='flex gap-x-4 w-full mt-[20px]'>
+                <label className='w-full'>
+                    <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'
+                    >First Name<sup className='text-pink-200'>*</sup></p>
 
-                    <input type='text' name='firstname' onChange={changeHandler} placeholder='Enter your first name' value={formData.firstname} />
+                    <input type='text' name='firstname' onChange={changeHandler} 
+                    className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
+                    placeholder='Enter your first name' value={formData.firstname} />
                 </label>
 
-                <label>
-                    <p>Last Name<sup>*</sup></p>
+                <label className='w-full'>
+                    <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'
+                    >Last Name<sup className='text-pink-200'>*</sup></p>
 
-                    <input type='text' name='lastname' onChange={changeHandler} placeholder='Enter your last name' value={formData.lastname} />
+                    <input
+                    className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
+                     type='text' name='lastname' onChange={changeHandler} placeholder='Enter your last name' value={formData.lastname} />
                 </label>
             </div>
 
             {/* email */}
-            <label>
-                <p>Email Address<sup>*</sup></p>
+            <div className='mt-[20px]'>
+                <label className=' w-full'>
+                    <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'
+                    >Email Address<sup className='text-pink-200'>*</sup></p>
 
-                <input type='email' name='email' onChange={changeHandler} placeholder='Enter your email' value={formData.email} />
-            </label>
+                    <input 
+                    className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
+                    type='email' name='email' onChange={changeHandler} placeholder='Enter your email' value={formData.email} />
+                </label>
+            </div>
 
             {/* create and confirm password */}
 
-            <div>
-                <label>
-                    <p>Create password<sup>*</sup></p>
+            <div className='flex gap-x-4 w-full mt-[20px]'>
+                <label className='relative w-full'>
+                    <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'
+                    >Create password<sup className='text-pink-200'>*</sup></p>
 
-                    <input type={showPassword ? ("text") : ("password")} name='password' onChange={changeHandler} placeholder='Enter password' value={formData.password} />
+                    <input 
+                    className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
+                    type={showPassword ? ("text") : ("password")} name='password' onChange={changeHandler} placeholder='Enter password' value={formData.password} />
 
-                    <span onClick={() => setShowPassword((prev) => !prev)}>
-                        {showPassword ? (<AiOutlineEyeInvisible/>) : (<AiOutlineEye/>)}
+                    <span
+                    className='absolute right-3 top-[38px] cursor-pointer'
+                     onClick={() => setShowPassword((prev) => !prev)}>
+                        {showPassword ? (<AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF'/>) : (<AiOutlineEye fontSize={24} fill='#AFB2BF'/>)}
                     </span>
                 </label>
 
-                <label>
-                    <p>Confirm password<sup>*</sup></p>
+                <label className='relative w-full'>
+                    <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'
+                    >Confirm password<sup className='text-pink-200'>*</sup></p>
 
-                    <input type={showPassword ? ("text") : ("password")} name='confirmPassword' onChange={changeHandler} placeholder='Confirm password' value={formData.confirmPassword} />
+                    <input 
+                    className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
+                    type={showConfirmPassword ? ("text") : ("password")} name='confirmPassword' onChange={changeHandler} placeholder='Confirm password' value={formData.confirmPassword} />
 
-                    <span onClick={() => setShowPassword((prev) => !prev)}>
-                        {showPassword ? (<AiOutlineEyeInvisible/>) : (<AiOutlineEye/>)}
+                    <span
+                    className='absolute right-3 top-[38px] cursor-pointer'
+                     onClick={() => setShowConfirmPassword((prev) => !prev)}>
+                        {showConfirmPassword ? (<AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF'/>) : (<AiOutlineEye fontSize={24} fill='#AFB2BF'/>)}
                     </span>
                 </label>
             </div>
 
             {/* button */}
-            <button>
+            <button className=' w-full bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
                 Create Account
             </button>
 
